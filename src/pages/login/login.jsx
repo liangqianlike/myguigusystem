@@ -7,8 +7,45 @@ import './login.less';
 
 const Item = Form.Item;
 
-export default class Login extends Component {
+class Login extends Component {
+       handleSubmit = e =>{
+        //阻止事件的默认行为：阻止表单的提交
+        e.preventDefault();
+
+        //取出输入的相关的数据-------------测试（查看数据有没有出来）
+        //  const form = this.props.form;
+        //  const values = form.getFieldsValue();
+        //  const username = form.getFieldValue('username');
+        //  const password = form.getFieldValue('password');
+        //  console.log(values, username, password);
+        //  alert('发送的ajax请求');
+        this.props.form.validateFields((err, {username,password}) => {
+            if (!err) {
+              alert(`使用ajax发送请求，用户名为${username},密码为：${password}`);
+            }
+        });
+
+
+
+        }
+        validatePwd = (rule, value, callback) => {
+            value = value.trim();
+            if(!value){
+                callback('密码必须输入！！！');
+            }else if(value.length <= 4){
+                callback('密码必须大于等于4位');
+            }else if(value.length >= 12){
+                callback('密码必须小于等于12为');
+            }else if(!/^[a-zA-Z0-9_]+$/.test(value)){
+                callback('密码必须是英文，数字，或下划线的组合！！！ ');
+            }else {
+                //进入此判断则输入合法，验证通过
+                callback();   
+            }
+        }
+
     render() {
+        const { getFieldDecorator } = this.props.form;
         return (
             <div className="login">
                 <div className="login-header">
@@ -17,19 +54,46 @@ export default class Login extends Component {
                 </div>
                 <section className='login-content'>
                     <h1>用户登陆</h1>
-                    <Form onSubmit={this.login} className="login-form">
+                    <Form onSubmit={this.handleSubmit} className="login-form">
                         <Item>
-                            <Input prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                                placeholder="用户名"/>
+                            {
+                                getFieldDecorator('username',{
+                                    // 1). 必须输入
+                                    // 2). 必须大于等于4位
+                                    // 3). 必须小于等于12位
+                                    // 4). 必须
+                                    initialValue: '',      //设置默认值
+                                    rules: [
+                                        { required: true, whitespace: true, message: '用户名必填！！！' },
+                                        { min: 4, message: '用户名必须大于等于四位'},
+                                        { max: 12, message: '密码必须小于等于12位'},
+                                        {pattern: /^[a-zA-Z0-9_]+$/, message: '用户名必须是英文，数字，或下划线的组合！！！ '}
+                                    ]
+                                })(
+                                    <Input prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                                        placeholder="用户名"/>
+                                )
+        
+                            }
                         </Item>
                         <Item>
-                            <Input prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                                type="password" placeholder="密码"/>
+                            {
+                                getFieldDecorator('password',{
+                                    initialValue: '',      //设置默认值
+                                    rules:[{
+                                        validator: this.validatePwd
+                                    }]
+                                })(
+                                    <Input prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                                        type="password" placeholder="密码"/>
+                                )
+        
+                            }
                         </Item>
                         <Item>
-                            <Button type="primary" htmlType="submit" className="login-form-button">
-                                 登录
-                            </Button>
+                        <Button type="primary" htmlType="submit" className="login-form-button">
+                                登录
+                        </Button>
                         </Item>
                     </Form>
                 </section>
@@ -37,3 +101,19 @@ export default class Login extends Component {
         )
     }
 }
+
+const WrapperForm = Form.create()(Login);
+
+export default WrapperForm;       //<Form(Login)>
+
+
+
+  /* 
+用户名/密码的合法性要求:
+用户名/密码的的合法性要求
+  1). 必须输入
+  2). 必须大于等于4位
+  3). 必须小于等于12位
+  4). 必须
+  
+  */

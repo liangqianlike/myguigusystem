@@ -9,14 +9,15 @@ export default class App extends Component{
     handleClick = () => {
         message.success("成功啦。。。");
     }
+    
     render(){
-       return (
+        return (
             <HashRouter>
                 <Switch>
                     <Route path="/login" component={Login}/>
                     <Route path="/" component={Admin}/>
                 </Switch>
             </HashRouter>
-       )
+        )
     }
 }
