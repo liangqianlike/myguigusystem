@@ -1,32 +1,43 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input, Button } from 'antd';
+import { Form, Icon, Input, Button, message} from 'antd';
 
 
 import logo from './images/logo.png';
 import './login.less';
+import { reqLogin } from '../../api/index';
 
 const Item = Form.Item;
 
 class Login extends Component {
        handleSubmit = e =>{
-        //阻止事件的默认行为：阻止表单的提交
-        e.preventDefault();
+            //阻止事件的默认行为：阻止表单的提交
+            e.preventDefault();
 
-        //取出输入的相关的数据-------------测试（查看数据有没有出来）
-        //  const form = this.props.form;
-        //  const values = form.getFieldsValue();
-        //  const username = form.getFieldValue('username');
-        //  const password = form.getFieldValue('password');
-        //  console.log(values, username, password);
-        //  alert('发送的ajax请求');
-        this.props.form.validateFields((err, {username,password}) => {
-            if (!err) {
-              alert(`使用ajax发送请求，用户名为${username},密码为：${password}`);
-            }
-        });
+            //取出输入的相关的数据-------------测试（查看数据有没有出来）
+            //  const form = this.props.form;
+            //  const values = form.getFieldsValue();
+            //  const username = form.getFieldValue('username');
+            //  const password = form.getFieldValue('password');
+            //  console.log(values, username, password);
+            //  alert('发送的ajax请求');
+            this.props.form.validateFields(async (err, {username,password}) => {
+                if (!err) {
+                    
+                    const result = await reqLogin({username,password});
+                    console.log(result.status);
+                    //登录成功
+                    if (result.status === 0){
+                        // message('登录成功！！！');
+                        //跳转到管理界面
+                        this.props.history.replace('/');
+                    } else {
+                    //登录失败
+                        message.error(result.msg);
+                    }
 
 
-
+                }
+            });
         }
         validatePwd = (rule, value, callback) => {
             value = value.trim();
