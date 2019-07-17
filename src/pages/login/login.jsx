@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Form, Icon, Input, Button, message} from 'antd';
-
+import {Redirect} from 'react-router-dom';
 
 import logo from './images/logo.png';
 import './login.less';
 import { reqLogin } from '../../api/index';
+import storageUtils from '../../utils/storageUtils';
 
 const Item = Form.Item;
 
@@ -28,6 +29,10 @@ class Login extends Component {
                     // console.log(result.data ,username,password);
                     //登录成功
                     if (result.status === 0){
+                        //将data存储到浏览器中
+                        const user = result.data;
+                        // localStorage.setItem('user_key',JSON.stringify(user));
+                        storageUtils.saveUser(user);
                         message.success('登录成功！！！');
                         //跳转到管理界面
                         this.props.history.replace('/');
@@ -57,6 +62,14 @@ class Login extends Component {
         }
 
     render() {
+        //读取保存的user，读取，无则跳转到管理界面
+        const user = storageUtils.getUser();
+        if(user._id){
+            //自动跳转到指定页面
+            return <Redirect to="/" />
+        }
+
+
         const { getFieldDecorator } = this.props.form;
         return (
             <div className="login">
