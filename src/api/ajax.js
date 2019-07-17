@@ -8,10 +8,11 @@ axios.interceptors.request.use(function (config){
     //得到请求方式和请求体数据
     const {method, data} = config;
     //处理post请求，将data对象转换为query参数格式字符串
+    // console.log(data)
     if(method.toLowerCase() === 'post' && typeof data === 'object'){
         config.data = qs.stringify(data);
     }
-    console.log('config'+config);
+    // console.log('config'+config);
     return config;
 });
 
@@ -21,7 +22,7 @@ axios.interceptors.request.use(function (config){
     //功能2：
 //在请求返回之后且在我们指定的请求响应回调函数之前
 axios.interceptors.response.use(function (response) {
-    console.log('ssss'+response.data);
+    // console.log('ssss'+response.data);
     return response.data;
 }, function (error){
     message.error('请求出错 ' + error.message);

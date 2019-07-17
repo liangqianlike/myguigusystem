@@ -21,13 +21,14 @@ class Login extends Component {
             //  console.log(values, username, password);
             //  alert('发送的ajax请求');
             this.props.form.validateFields(async (err, {username,password}) => {
+                // console.log(username,password)
                 if (!err) {
                     
-                    const result = await reqLogin({username,password});
-                    console.log(result.status);
+                    const result = await reqLogin(username,password);
+                    // console.log(result.data ,username,password);
                     //登录成功
                     if (result.status === 0){
-                        // message('登录成功！！！');
+                        message.success('登录成功！！！');
                         //跳转到管理界面
                         this.props.history.replace('/');
                     } else {
