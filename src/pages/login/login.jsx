@@ -6,6 +6,7 @@ import logo from '../../asstes/images/logo.png';
 import './login.less';
 import { reqLogin } from '../../api/index';
 import storageUtils from '../../utils/storageUtils';
+import memoryUtils from '../../utils/memoryUtils';
 
 const Item = Form.Item;
 
@@ -33,6 +34,10 @@ class Login extends Component {
                         const user = result.data;
                         // localStorage.setItem('user_key',JSON.stringify(user));
                         storageUtils.saveUser(user);
+
+                        //存储到内存中
+                        memoryUtils.user = user;
+
                         message.success('登录成功！！！');
                         //跳转到管理界面
                         this.props.history.replace('/home');
@@ -63,7 +68,8 @@ class Login extends Component {
 
     render() {
         //读取保存的user，读取，无则跳转到管理界面
-        const user = storageUtils.getUser();
+        // const user = storageUtils.getUser();
+        const user = memoryUtils.user;
         if(user._id){
             //自动跳转到指定页面
             return <Redirect to="/" />

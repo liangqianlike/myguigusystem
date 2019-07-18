@@ -5,6 +5,7 @@ import { Layout } from 'antd';
 import Header from '../../compoents/header';
 import LeftNav from '../../compoents/left-nav';
 import storageUtils from '../../utils/storageUtils';
+import memoryUtils from '../../utils/memoryUtils';
 import Home from '../home/home';
 import Category from '../category/category';
 import Product from '../product/product';
@@ -24,7 +25,9 @@ export default class Admin extends Component {
   render() {
     //读取保存的user，有则读取，无则显示登录界面
     // const user = JSON.parse(localStorage.getItem('user_key') || '{}');
-    const user = storageUtils.getUser();
+    // const user = storageUtils.getUser();
+    const user = memoryUtils.user;
+    
     if (!user._id) {
       //用于事件函数中进行路由跳转
       // this.props.history.replace('/loogin');
@@ -38,7 +41,7 @@ export default class Admin extends Component {
         </Sider>
         <Layout>
           <Header />
-          <Content style={{background: 'deepskyblue'}}>
+          <Content style={{background: 'deepskyblue',margin: 20}}>
             <Switch>
               <Route path="/home" component={Home} />
               <Route path="/category" component={Category} />
