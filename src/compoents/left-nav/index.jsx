@@ -80,11 +80,20 @@ class Leftnav extends Component {
 
     // }
 
+
+    //第一次render()之前执行一次
+    //为第一次render()做一些同步工作
+    //
+    componentWillMount () {
+        this.menuNodes = this.getMenuNodes1(menuList);
+    }
+
+
+
     render() {
-        const menuNodes = this.getMenuNodes1(menuList);
         //得到当前请求的路由路径
         const selectKey = this.props.location.pathname;
-        console.log(menuNodes);
+        // console.log(menuNodes);
         return (
             <div className="left-nav">
                 <Link className="left-nav-link" to="/home">
@@ -92,14 +101,12 @@ class Leftnav extends Component {
                     <h2>雨声管理</h2>
                 </Link>
                 <Menu
-                    defaultSelectedKeys={[selectKey]}
+                    selectedKeys={[selectKey]}
                     defaultOpenKeys={[this.openkey]}
                     mode="inline"
                     theme="dark"
                 >
-                    {
-                        menuNodes
-                    }
+                    {this.menuNodes}
                     {/* <Menu.Item key="/home">
                         <Icon type="home" />
                         <span>首页</span>

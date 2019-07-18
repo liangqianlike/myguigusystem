@@ -48,6 +48,7 @@ export default class Admin extends Component {
               <Route path="/charts/bar" component={Bar} />
               <Route path="/charts/line" component={Line} />
               <Route path="/charts/pie" component={Pie} />
+              <Redirect to="/home" />
             </Switch>
           </Content>
           <Footer style={{textAlign: 'center', color: 'rgba(0,0,0,0.5)'}}>推荐使用谷歌浏览器，可以获得更佳页面操作体验</Footer>

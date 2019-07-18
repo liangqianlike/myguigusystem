@@ -35,7 +35,7 @@ class Login extends Component {
                         storageUtils.saveUser(user);
                         message.success('登录成功！！！');
                         //跳转到管理界面
-                        this.props.history.replace('/');
+                        this.props.history.replace('/home');
                     } else {
                     //登录失败
                         message.error(result.msg);
