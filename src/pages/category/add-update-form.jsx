@@ -8,21 +8,24 @@ import {
 import PropTypes from 'prop-types';
 
 const Item = Form.Item;
-class AdduUpdate extends Component {
+class AddupDateForm extends Component {
     static propTypes = {
-        setForm: PropTypes.func.isRequired
+        setForm: PropTypes.func.isRequired,
+        categoryName: PropTypes.string
     }
     componentWillMount() {
         this.props.setForm(this.props.form);
     }
     render() {
         const { getFieldDecorator } = this.props.form;
+        const { categoryName } = this.props;
+        console.log(categoryName);
         return (
             <Form>
                 <Item>
                     {
                         getFieldDecorator('categoryName', {
-                            initialValue: '',
+                            initialValue: categoryName || '',
                             rules: [
                                 {required: true, message: '分类名称必须输入'}
                             ]
@@ -35,4 +38,4 @@ class AdduUpdate extends Component {
         )
     }
 }
-export default Form.create()(AdduUpdate);
+export default Form.create()(AddupDateForm);
