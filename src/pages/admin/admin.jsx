@@ -4,7 +4,6 @@ import { Layout } from 'antd';
 
 import Header from '../../compoents/header';
 import LeftNav from '../../compoents/left-nav';
-import storageUtils from '../../utils/storageUtils';
 import memoryUtils from '../../utils/memoryUtils';
 import Home from '../home/home';
 import Category from '../category/category';
