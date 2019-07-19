@@ -61,6 +61,17 @@ export const reqWeather = (city) => {
 //获取分类列表
 export const reqCategorys = () => ajax(BASE + '/manage/category/list');
 
+//添加分类
+export const reqAddCategory = categoryName => ajax.post(BASE + '/manage/category/add', {
+    categoryName
+});
+
+//修改分类
+export const reqUpdateCtegory = (categoryId, categoryName) => ajax.post(BASE + 'http://localhost:5000/manage/category/update', {
+    categoryId,
+    categoryName
+});
+
 
 
 //知识点：ajax不能发送jsop请求，所以安装插件jsop用于发送jsop请求
