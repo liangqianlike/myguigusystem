@@ -19,7 +19,7 @@ class AddupDateForm extends Component {
     render() {
         const { getFieldDecorator } = this.props.form;
         const { categoryName } = this.props;
-        console.log(categoryName);
+        // console.log(categoryName);
         return (
             <Form>
                 <Item>

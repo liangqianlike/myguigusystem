@@ -1,7 +1,6 @@
 import ajax from './ajax';
 import jsonp from 'jsonp';
-// import { resolve } from 'upath';
-// import { reject } from 'q';
+
 import { message } from 'antd';
 const BASE = '';
 
@@ -67,11 +66,21 @@ export const reqAddCategory = (categoryName) => ajax.post(BASE + '/manage/catego
 });
 
 //修改分类
-export const reqUpdateCtegory = ({categoryId, categoryName}) => ajax.post(BASE + '/manage/category/update', {
+export const reqUpdateCtegory = (categoryId, categoryName) => ajax.post(BASE + '/manage/category/update', {
+
     categoryId,
     categoryName
 });
 
+
+//添加分页
+export const reqProducts = (pageNum, pageSize) => ajax(BASE + '/manage/product/list', {
+    //params 包含所有的query参数的对象
+    params: {  
+        pageNum,
+        pageSize
+    }
+})
 
 
 //知识点：ajax不能发送jsop请求，所以安装插件jsop用于发送jsop请求

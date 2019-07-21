@@ -46,10 +46,7 @@ export default class Category extends Component {
     handleOk = () => {
         //表单验证
         this.form.validateFields(async (err, values) => {
-
             if (!err) {
-                //重置输入数据
-                this.form.resetFields();
                 //读取输入框的值
                 const { categoryName } = values;
                 let result;
@@ -61,13 +58,13 @@ export default class Category extends Component {
                 if (showStatus === 1) {
                     //发添加分类的请求
                     result = await reqAddCategory(categoryName);
-
                 } else {
                     const categorId = this.category._id;
-                    console.log('修改的值'+categorId+'sss'+categoryName);
-                    result = await reqUpdateCtegory({ categorId, categoryName });
+                    // console.log('提前的'+this.category._id);
+                    // console.log('修改的值'+categorId+'sss'+categoryName);
+                    result = await reqUpdateCtegory(categorId, categoryName);
                 }
-                this.form.resetFields() // 重置输入数据(变成了初始值)
+                this.form.resetFields(); // 重置输入数据(变成了初始值)
                 //关闭添加/修改框
                 this.setState({ showStatus: 0 });
                 //根据返回的结果输出对应的结果
@@ -76,9 +73,6 @@ export default class Category extends Component {
                     //重新拉去最新结果
                     this.getCategorys();
                     message.success(action + '分类成功！！！');
-
-                    //    console.log(categoryName);
-                    // categoryName = '';
                 } else {
                     message.error(action + '分类失败！！！');
                 }
